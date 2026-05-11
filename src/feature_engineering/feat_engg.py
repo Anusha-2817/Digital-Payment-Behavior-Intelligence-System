@@ -1,7 +1,7 @@
 import pandas as pd
 
 # load transaction dataset
-df = pd.read_csv("upi_transactions_behavioral.csv")
+df = pd.read_csv("data/raw/upi_transactions_behavioral.csv")
 
 # store engineered rows
 feature_rows = []
@@ -100,7 +100,7 @@ features_df = pd.DataFrame(feature_rows)
 
 # save
 features_df.to_csv(
-    "user_behavior_features.csv",
+    "data/processed/user_behavior_features.csv",
     index=False
 )
 
