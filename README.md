@@ -124,3 +124,10 @@ Removing leakage-related features reduced model performance slightly but improve
 ▶️ Running the Project
 pip install -r requirements.txt
 python main.py
+
+Implemented:
+
+- behavioral transaction simulation
+- feature engineering pipeline
+- KMeans-based user segmentation
+- semantic user labeling
