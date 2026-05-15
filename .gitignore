@@ -1,9 +1,25 @@
+# Virtual environments
 venv/
+env/
+
+# Python cache
 __pycache__/
 *.pyc
 
-outputs/
+# Model files
 *.pkl
 *.joblib
 
+# OS files
 .DS_Store
+
+# Outputs
+outputs/
+
+# Large generated datasets (optional)
+# Uncomment if needed
+# data/raw/*.csv
+# data/processed/*.csv
+
+# VSCode settings
+.vscode/

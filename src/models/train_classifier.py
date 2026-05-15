@@ -22,14 +22,14 @@ from sklearn.metrics import (
 # -----------------------------
 
 df = pd.read_csv(
-    "data/processed/labeled_users.csv"
+    "data/processed/user_behavior_features.csv"
 )
 
 # -----------------------------
 # FEATURES
 # -----------------------------
 
-features = [
+basic_features = [
     "txn_count",
     "avg_transaction_value",
     "merchant_diversity",
@@ -39,28 +39,41 @@ features = [
     "recurring_payment_ratio"
 ]
 
-X = df[features]
+behavioral_features = [
 
-y = df["spender_type"]
+    # BASIC
+    "txn_count",
+    "avg_transaction_value",
+    "merchant_diversity",
+    "weekend_spending_ratio",
+    "night_transaction_ratio",
+    "failed_transaction_rate",
+    "recurring_payment_ratio",
+
+    # ADVANCED
+    "spending_variance",
+    "high_value_txn_ratio",
+    "late_night_txn_count",
+    "weekend_night_ratio",
+    "category_switch_rate",
+    "unique_upi_apps",
+    "avg_transaction_gap",
+    "transaction_gap_variance",
+    "failed_txn_spike_ratio"
+]
+
+
+
+
 
 # -----------------------------
 # ENCODE LABELS
 # -----------------------------
-
+y = df["behavior_personality"]
+print(df["behavior_personality"].value_counts())
 encoder = LabelEncoder()
 
 y_encoded = encoder.fit_transform(y)
-
-# -----------------------------
-# TRAIN TEST SPLIT
-# -----------------------------
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X,
-    y_encoded,
-    test_size=0.2,
-    random_state=42
-)
 
 # -----------------------------
 # MODELS
@@ -83,46 +96,73 @@ models = {
 # TRAIN + EVALUATE
 # -----------------------------
 
-results = {}
+def train_and_evaluate(feature_set, experiment_name):
 
-for name, model in models.items():
+    print("\n" + "#"*60)
+    print(f"EXPERIMENT: {experiment_name}")
+    print("#"*60)
 
-    print("\n" + "="*50)
-    print(f"{name}")
-    print("="*50)
+    X = df[feature_set]
+    print("\nFEATURE COLUMNS:")
+    print(X.columns.tolist())
 
-    # train
-    model.fit(X_train, y_train)
+    print("\nTARGET COLUMN:")
+    print(y.name)
 
-    # predict
-    y_pred = model.predict(X_test)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X,
+        y_encoded,
+        test_size=0.2,
+        random_state=42
+    )
 
-    # accuracy
-    accuracy = accuracy_score(y_test, y_pred)
+    results = {}
 
-    results[name] = accuracy
+    for name, model in models.items():
 
-    print(f"\nAccuracy: {accuracy:.4f}")
+        print("\n" + "="*50)
+        print(f"{name}")
+        print("="*50)
 
-    # classification report
-    print("\nClassification Report")
-    print(classification_report(y_test, y_pred))
+        model.fit(X_train, y_train)
 
-    # confusion matrix
-    print("\nConfusion Matrix")
-    print(confusion_matrix(y_test, y_pred))
+        y_pred = model.predict(X_test)
 
-# -----------------------------
-# BEST MODEL
-# -----------------------------
+        accuracy = accuracy_score(y_test, y_pred)
 
-best_model = max(results, key=results.get)
+        results[name] = accuracy
 
-print("\n" + "="*50)
-print("FINAL MODEL COMPARISON")
-print("="*50)
+        print(f"\nAccuracy: {accuracy:.4f}")
 
-for model_name, score in results.items():
-    print(f"{model_name}: {score:.4f}")
+    best_model = max(results, key=results.get)
 
-print(f"\nBest Model: {best_model}")
+    print("\n" + "-"*50)
+    print("MODEL COMPARISON")
+    print("-"*50)
+
+    for model_name, score in results.items():
+        print(f"{model_name}: {score:.4f}")
+
+    print(f"\nBest Model: {best_model}")
+
+    return results
+
+# ---------------------------------
+# EXPERIMENT 1
+# BASIC FEATURES
+# ---------------------------------
+
+basic_results = train_and_evaluate(
+    basic_features,
+    "BASIC FEATURES"
+)
+
+# ---------------------------------
+# EXPERIMENT 2
+# FULL BEHAVIORAL FEATURES
+# ---------------------------------
+
+behavior_results = train_and_evaluate(
+    behavioral_features,
+    "FULL BEHAVIORAL FEATURES"
+)

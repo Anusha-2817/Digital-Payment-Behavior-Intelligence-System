@@ -57,7 +57,7 @@ print(df["cluster"].value_counts())  #KMeans needs meaningful spread
 
 #cluster summary
 cluster_summary = df.groupby("cluster")[features].mean()
-print(cluster_summary.to_string())
+print(cluster_summary.round(2))
 #save clustered dataset
 df.to_csv( 
     "data/processed/clustered_users.csv",

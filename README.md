@@ -1,133 +1,277 @@
-# UPI & Digital Payment Behavior Intelligence System
+Synthetic Behavioral Analytics & Archetype Inference Framework
 
-🧠 Dataset Behavior Intelligence Pipeline
+An end-to-end machine learning pipeline for simulating, analyzing, and modeling digital payment behavior using synthetic transaction data.
 
-An end-to-end machine learning pipeline for analyzing tabular datasets, comparing model behavior, identifying hidden patterns, and generating interpretable insights.
+This project explores how behavioral machine learning systems can become misleading when synthetic datasets are overly deterministic and easily separable. The pipeline was redesigned to introduce realistic ambiguity, overlap, contradiction probability, and behavioral drift in order to better simulate noisy real-world human behavior.
 
-The project focuses on behavior-aware data analysis rather than only maximizing prediction scores.
+Rather than optimizing purely for accuracy, the project focuses on:
 
-Overview
+behavioral realism
+feature engineering
+robustness experimentation
+leakage awareness
+ambiguity in behavioral inference
+synthetic behavior simulation
+Project Overview
 
-This project was built to explore how ML pipelines can move beyond basic prediction tasks and provide meaningful understanding of structured data.
-The system:
+The system simulates users interacting with a digital payment ecosystem and attempts to infer hidden behavioral archetypes from transaction behavior.
 
-profiles datasets automatically
-compares multiple ML models
-analyzes feature importance
-detects hidden behavioral patterns
-performs clustering-based segmentation
-generates interpretable reports
+The pipeline combines:
 
-The current implementation uses a synthetic digital payment transaction dataset to simulate real-world behavioral analytics scenarios.
+synthetic transaction generation
+behavioral feature engineering
+archetype inference
+behavioral experimentation
+model comparison
+realism tuning
+leakage detection
 
-Pipeline Architecture:
-Load Dataset
-↓
-Data Profiling & Cleaning
-↓
-Feature Engineering
-↓
-Categorical Encoding
-↓
-Model Training & Comparison
-↓
-Evaluation & Validation
-↓
-Feature Importance Analysis
-↓
-Behavioral Clustering
-↓
-Interpretability & Final Report
+The project evolved from an initially deterministic system producing artificial 100% accuracy into a more realistic behavioral simulation framework with overlapping user behavior and noisy patterns.
 
-📊 Current Capabilities
-Dataset Profiling
-Detects dataset structure
-Identifies numerical/categorical columns
-Handles missing values and noisy inputs
-Feature Engineering
-Removes irrelevant identifiers
-Detects potential leakage features
-Encodes categorical variables
-Builds behavioral indicators
-Machine Learning
+Core Idea
 
-Models currently explored:
+Each simulated user secretly belongs to a hidden behavioral archetype such as:
 
-Linear Regression
-Random Forest Regressor
-Gradient Boosting Regressor
+frugal
+balanced
+impulsive
+luxury
+digital_addict
 
-Evaluation metrics:
+These archetypes influence transaction behavior probabilistically rather than deterministically.
 
-R² Score
-MAE
-RMSE
-Clustering & Segmentation
-KMeans-based behavioral grouping
-User/spending segmentation
-Pattern discovery across transaction behaviors
-Interpretability
-Feature importance ranking
-Model comparison reporting
-Behavioral trend analysis
+The machine learning models never directly see the archetype label during behavior generation. Instead, they attempt to infer hidden tendencies from noisy behavioral patterns extracted through feature engineering.
 
-# 📌 Example Report
+Pipeline Architecture
+generate_upi_dataset.py
+        ↓
+Synthetic behavioral transaction generation
+        ↓
+feat_engg.py
+        ↓
+Behavioral feature extraction
+        ↓
+train_classifier.py
+        ↓
+Archetype inference & model evaluation
+File Lifecycle & Data Flow
+1. generate_upi_dataset.py
+Purpose
 
-# DATASET ANALYSIS REPORT
+Simulates digital payment transactions and user behavior.
 
-Samples: 4000
-Features: 16
+Creates
+transaction records
+spending behavior
+temporal behavior
+contradictions
+behavioral drift
+hidden archetypes
+Output
+data/raw/upi_transactions_behavioral.csv
+Output Type
 
-Problem Type: Regression
-Dataset Type: Non-linear
+Transaction-level dataset.
 
-Best Model: RandomForest
-Performance:
-
-- R²: 0.291
-- MAE: 468.06
-- RMSE: 1737.6
-
-Top Features:
-
-- balance_before
-- merchant_popularity
-- transaction_gap_minutes
-
-Clusters Identified:
-
-- Cluster 0 → Regular Users
-- Cluster 1 → Low Activity Users
-- Cluster 2 → High Spending Users
-
-Observation:
-Tree-based models performed better due to non-linear feature interactions.
-
-🧠 Concepts Explored
-Feature Engineering
-Data Leakage Detection
-Regression Modeling
-Behavioral Segmentation
-Feature Importance Analysis
-Clustering Techniques
-Explainable Machine Learning
-Synthetic Data Simulation
-
-⚠️ Important Learning
-
-One major focus of this project is understanding how misleading performance metrics can occur due to feature leakage.
 Example:
-balance_after
-was initially included as a feature, which unintentionally leaked future transaction information into the model.
-Removing leakage-related features reduced model performance slightly but improved the validity and reliability of the results.
 
-▶️ Running the Project
+user_id	amount	merchant	hour	behavior_personality
+
+2. feat_engg.py
+Purpose
+
+Converts raw transaction logs into behavioral summaries per user.
+
+Input
+data/raw/upi_transactions_behavioral.csv
+Operations
+groups transactions by user
+computes behavioral statistics
+extracts temporal behavior
+computes variance metrics
+derives behavioral indicators
+Example Engineered Features
+txn_count
+avg_transaction_value
+spending_variance
+night_transaction_ratio
+category_switch_rate
+merchant_diversity
+failed_txn_spike_ratio
+weekend_night_ratio
+Output
+data/processed/user_behavior_features.csv
+Output Type
+
+One behavioral profile per user.
+
+3. train_classifier.py
+Purpose
+
+Trains machine learning models to infer hidden behavioral archetypes.
+
+Input
+data/processed/user_behavior_features.csv
+Features Used
+Basic Features
+txn_count
+avg_transaction_value
+merchant_diversity
+weekend_spending_ratio
+night_transaction_ratio
+Advanced Behavioral Features
+spending_variance
+high_value_txn_ratio
+category_switch_rate
+transaction_gap_variance
+failed_txn_spike_ratio
+weekend_night_ratio
+Target Label
+behavior_personality
+Models Used
+Logistic Regression
+Random Forest
+Gradient Boosting
+Output
+model comparison
+behavioral inference accuracy
+robustness comparison
+
+Version Evolution
+Version 1 — Deterministic Behavioral System
+
+The original implementation generated highly separable behavioral classes and deterministic pseudo-labels.
+
+Characteristics:
+
+rigid behavior patterns
+clustering-generated labels
+minimal overlap
+deterministic scoring
+unrealistic separability
+artificial 100% classification accuracy
+
+Problems discovered:
+
+target leakage
+pseudo-label leakage
+unrealistic feature separability
+misleading evaluation metrics
+Version 2 — Realistic Behavioral Simulation
+
+The pipeline was redesigned to create more realistic human-like ambiguity.
+
+Enhancements introduced:
+
+overlapping behavioral distributions
+contradiction probability
+personality-behavior drift
+noisy spending patterns
+probabilistic behavior generation
+reduced deterministic influence
+richer behavioral features
+
+Result:
+
+more realistic inference difficulty
+reduced artificial separability
+improved behavioral realism
+lower but more valid accuracy
+Experimental Results
+Basic Features Only
+Model	Accuracy
+Logistic Regression	~10%
+Random Forest	~22%
+Gradient Boosting	~20%
+
+These features alone were insufficient for strong behavioral inference.
+
+Full Behavioral Features
+Model	Accuracy
+Logistic Regression	~30%
+Random Forest	~37%
+Gradient Boosting	~40%
+
+The addition of engineered behavioral features significantly improved inference quality.
+
+Earlier deterministic pipeline components were archived after transitioning to the Version 2 probabilistic behavioral simulation architecture
+
+Key Insight
+
+The reduction in accuracy from 100% to ~40% was intentional and reflected improved realism within the synthetic environment.
+
+The project demonstrates that:
+
+highly separable synthetic systems can create misleadingly perfect ML performance
+behavioral overlap increases realism
+contradictions reduce artificial separability
+engineered behavioral features improve inference quality
+leakage awareness is critical in behavioral ML systems
+Behavioral Features Engineered
+Spending Features
+average transaction value
+spending variance
+high-value transaction ratio
+total spend
+Temporal Features
+night transaction ratio
+weekend spending ratio
+transaction gap variance
+late-night transaction count
+Merchant Features
+merchant diversity
+category switching rate
+recurring transaction ratio
+Risk & Noise Features
+failed transaction rate
+failed transaction spikes
+anomaly-oriented behavioral indicators
+Important ML Concepts Explored
+feature engineering
+behavioral analytics
+synthetic data simulation
+target leakage
+pseudo-label leakage
+probabilistic systems
+ambiguity in ML
+model robustness
+overlapping distributions
+behavioral drift
+explainable behavioral inference
+Tech Stack
+Python
+pandas
+NumPy
+scikit-learn
+matplotlib
+Running the Project
+Install dependencies
 pip install -r requirements.txt
-python main.py
+Run full pipeline
+python src/data_generation/generate_upi_dataset.py
 
-Implemented:
+python src/feature_engineering/feat_engg.py
 
-- behavioral transaction simulation
-- feature engineering pipeline
-- KMeans-based user segmentation
-- semantic user labeling
+python src/models/train_classifier.py
+
+Future Improvements
+feature importance visualization
+SHAP-based explainability
+real-world transaction datasets
+fraud detection adaptation
+behavioral clustering visualization
+dashboard integration
+real-time behavioral inference
+Final Takeaway
+
+This project evolved from a standard synthetic ML classification pipeline into a behavioral simulation and robustness experimentation framework.
+
+The primary focus shifted from maximizing accuracy to understanding:
+
+realism
+ambiguity
+overlap
+behavioral inference difficulty
+reliability of evaluation metrics
+
+The resulting system better reflects the complexity and inconsistency of real-world human behavioral data.
