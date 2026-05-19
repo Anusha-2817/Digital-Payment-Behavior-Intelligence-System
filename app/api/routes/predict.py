@@ -1,7 +1,7 @@
 import pandas as pd
 
 from fastapi import APIRouter
-
+from app.schemas.transaction_schema import Transaction
 from app.services.feature_service import (
     process_transactions
 )
@@ -18,18 +18,16 @@ router = APIRouter()
 
 
 @router.post("/predict")
-def predict(data: list[dict]):
+def predict(data: list[Transaction]):
 
-    # convert incoming JSON to dataframe
-    df = pd.DataFrame(data)
+    df = pd.DataFrame(
+        [item.dict() for item in data]
+    )
 
-    # feature engineering
     features = process_transactions(df)
 
-    # inference
     predictions = predict_behavior(features)
 
-    # risk scoring
     risk_results = compute_risk(
         features,
         predictions

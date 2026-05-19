@@ -16,7 +16,7 @@ def compute_risk(features_df, predictions):
         # NIGHT SPENDING RISK
         # ---------------------------------
 
-        if row["night_transaction_ratio"] > 0.50:
+        if row["night_transaction_ratio"] > 0.15:
 
             risk_score += 20
 
@@ -28,7 +28,7 @@ def compute_risk(features_df, predictions):
         # FAILED TRANSACTION RISK
         # ---------------------------------
 
-        if row["failed_txn_spike_ratio"] > 0.30:
+        if row["failed_txn_spike_ratio"] > 0.10:
 
             risk_score += 25
 
@@ -40,7 +40,7 @@ def compute_risk(features_df, predictions):
         # HIGH VALUE SPENDING
         # ---------------------------------
 
-        if row["high_value_txn_ratio"] > 0.40:
+        if row["high_value_txn_ratio"] > 0.15:
 
             risk_score += 20
 
@@ -52,7 +52,7 @@ def compute_risk(features_df, predictions):
         # MERCHANT DIVERSITY
         # ---------------------------------
 
-        if row["merchant_diversity"] > 12:
+        if row["merchant_diversity"] > 8:
 
             risk_score += 15
 
