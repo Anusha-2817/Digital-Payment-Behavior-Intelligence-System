@@ -1,7 +1,8 @@
 import pandas as pd
-
+import joblib
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import StandardScaler
 
 # MODELS
 from sklearn.linear_model import LogisticRegression
@@ -64,8 +65,6 @@ behavioral_features = [
 
 
 
-
-
 # -----------------------------
 # ENCODE LABELS
 # -----------------------------
@@ -115,7 +114,14 @@ def train_and_evaluate(feature_set, experiment_name):
         test_size=0.2,
         random_state=42
     )
+    # -----------------------------
+    # FEATURE SCALING
+    # -----------------------------
 
+    scaler = StandardScaler()
+
+    X_train = scaler.fit_transform(X_train)
+    X_test = scaler.transform(X_test)
     results = {}
 
     for name, model in models.items():
@@ -135,7 +141,7 @@ def train_and_evaluate(feature_set, experiment_name):
         print(f"\nAccuracy: {accuracy:.4f}")
 
     best_model = max(results, key=results.get)
-
+    best_model_object = models[best_model]
     print("\n" + "-"*50)
     print("MODEL COMPARISON")
     print("-"*50)
@@ -145,7 +151,7 @@ def train_and_evaluate(feature_set, experiment_name):
 
     print(f"\nBest Model: {best_model}")
 
-    return results
+    return results, best_model_object, scaler, encoder
 
 # ---------------------------------
 # EXPERIMENT 1
@@ -162,7 +168,11 @@ basic_results = train_and_evaluate(
 # FULL BEHAVIORAL FEATURES
 # ---------------------------------
 
-behavior_results = train_and_evaluate(
+behavior_results, model, scaler, label_encoder = train_and_evaluate(
     behavioral_features,
     "FULL BEHAVIORAL FEATURES"
 )
+
+joblib.dump(model, "models/saved/classifier.pkl")
+joblib.dump(scaler, "models/saved/scaler.pkl")
+joblib.dump(label_encoder, "models/saved/label_encoder.pkl")

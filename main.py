@@ -1,6 +1,6 @@
 from src import data_profiler
 from src import model_trainer
-from src import feat_importance
+from . import evaluate_model
 from src import clustering
 # -----------------------------
 # LOAD DATA
@@ -44,14 +44,14 @@ print("Dataset Type:", dataset_type)
 # -----------------------------
 best_model_obj = models[best_model]
 
-feature_df = feat_importance.get_feat_importance(
+feature_df = evaluate_model.get_feat_importance(
     best_model_obj,
     X_train.columns
 )
 
-feat_importance.print_top_features(feature_df)
+evaluate_model.print_top_features(feature_df)
 
-feat_importance.plot_feat_importance(feature_df)
+evaluate_model.plot_feat_importance(feature_df)
 
 from src import clustering
 

@@ -1,4 +1,4 @@
-Synthetic Behavioral Analytics & Archetype Inference Framework
+## Synthetic Behavioral Analytics & Archetype Inference Framework
 
 An end-to-end machine learning pipeline for simulating, analyzing, and modeling digital payment behavior using synthetic transaction data.
 
@@ -16,7 +16,7 @@ Project Overview
 
 The system simulates users interacting with a digital payment ecosystem and attempts to infer hidden behavioral archetypes from transaction behavior.
 
-The pipeline combines:
+## The pipeline combines:
 
 synthetic transaction generation
 behavioral feature engineering
@@ -28,7 +28,7 @@ leakage detection
 
 The project evolved from an initially deterministic system producing artificial 100% accuracy into a more realistic behavioral simulation framework with overlapping user behavior and noisy patterns.
 
-Core Idea
+## Core Idea
 
 Each simulated user secretly belongs to a hidden behavioral archetype such as:
 
@@ -42,7 +42,8 @@ These archetypes influence transaction behavior probabilistically rather than de
 
 The machine learning models never directly see the archetype label during behavior generation. Instead, they attempt to infer hidden tendencies from noisy behavioral patterns extracted through feature engineering.
 
-Pipeline Architecture
+## Pipeline Architecture
+
 generate_upi_dataset.py
         ↓
 Synthetic behavioral transaction generation
@@ -54,8 +55,9 @@ Behavioral feature extraction
 train_classifier.py
         ↓
 Archetype inference & model evaluation
-File Lifecycle & Data Flow
-1. generate_upi_dataset.py
+
+## File Lifecycle & Data Flow
+## 1. generate_upi_dataset.py
 Purpose
 
 Simulates digital payment transactions and user behavior.
@@ -77,7 +79,7 @@ Example:
 
 user_id	amount	merchant	hour	behavior_personality
 
-2. feat_engg.py
+## 2. feat_engg.py
 Purpose
 
 Converts raw transaction logs into behavioral summaries per user.
@@ -105,7 +107,7 @@ Output Type
 
 One behavioral profile per user.
 
-3. train_classifier.py
+## 3. train_classifier.py
 Purpose
 
 Trains machine learning models to infer hidden behavioral archetypes.
@@ -137,8 +139,8 @@ model comparison
 behavioral inference accuracy
 robustness comparison
 
-Version Evolution
-Version 1 — Deterministic Behavioral System
+## Version Evolution
+## Version 1 — Deterministic Behavioral System
 
 The original implementation generated highly separable behavioral classes and deterministic pseudo-labels.
 
@@ -157,7 +159,7 @@ target leakage
 pseudo-label leakage
 unrealistic feature separability
 misleading evaluation metrics
-Version 2 — Realistic Behavioral Simulation
+## Version 2 — Realistic Behavioral Simulation
 
 The pipeline was redesigned to create more realistic human-like ambiguity.
 
@@ -171,7 +173,17 @@ probabilistic behavior generation
 reduced deterministic influence
 richer behavioral features
 
-Result:
+| Metric         | V1            | V2            |
+| -------------- | ------------- | ------------- |
+| Accuracy       | ~100%         | 40%           |
+| Behavior       | Deterministic | Probabilistic |
+| Overlap        | Minimal       | High          |
+| Noise          | Low           | Moderate      |
+| Contradictions | None          | Present       |
+| Realism        | Weak          | Strong        |
+
+
+## Result:
 
 more realistic inference difficulty
 reduced artificial separability
@@ -180,7 +192,7 @@ lower but more valid accuracy
 Experimental Results
 Basic Features Only
 Model	Accuracy
-Logistic Regression	~10%
+Logistic Regression	~15%
 Random Forest	~22%
 Gradient Boosting	~20%
 
@@ -188,7 +200,7 @@ These features alone were insufficient for strong behavioral inference.
 
 Full Behavioral Features
 Model	Accuracy
-Logistic Regression	~30%
+Logistic Regression	~35%
 Random Forest	~37%
 Gradient Boosting	~40%
 
@@ -196,11 +208,21 @@ The addition of engineered behavioral features significantly improved inference 
 
 Earlier deterministic pipeline components were archived after transitioning to the Version 2 probabilistic behavioral simulation architecture
 
-Key Insight
 
-The reduction in accuracy from 100% to ~40% was intentional and reflected improved realism within the synthetic environment.
 
-The project demonstrates that:
+## Key Insights
+
+The project evolution revealed several important behavioral ML insights:
+
+- Human-like behavioral simulation naturally introduces ambiguity and overlap.
+- Perfect classification accuracy in synthetic systems often indicates unrealistic separability or leakage.
+- Temporal behavioral features were significantly more predictive than simple aggregate spending statistics.
+- Nonlinear ensemble models outperformed linear methods, suggesting behavioral inference is inherently nonlinear.
+- Increased realism reduced model confidence while improving behavioral plausibility and robustness.
+
+The transition from Version 1 to Version 2 shifted the project focus from artificial classification performance toward realism-aware behavioral intelligence experimentation.
+
+## The project demonstrates that:
 
 highly separable synthetic systems can create misleadingly perfect ML performance
 behavioral overlap increases realism
@@ -244,17 +266,20 @@ pandas
 NumPy
 scikit-learn
 matplotlib
-Running the Project
+## Running the Project
+
 Install dependencies
 pip install -r requirements.txt
+
 Run full pipeline
+
 python src/data_generation/generate_upi_dataset.py
 
 python src/feature_engineering/feat_engg.py
 
 python src/models/train_classifier.py
 
-Future Improvements
+## Future Improvements
 feature importance visualization
 SHAP-based explainability
 real-world transaction datasets
@@ -262,7 +287,8 @@ fraud detection adaptation
 behavioral clustering visualization
 dashboard integration
 real-time behavioral inference
-Final Takeaway
+
+## Final Takeaway
 
 This project evolved from a standard synthetic ML classification pipeline into a behavioral simulation and robustness experimentation framework.
 

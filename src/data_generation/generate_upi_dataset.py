@@ -163,6 +163,12 @@ for user in users:
                 if m["category"] in user["preferred_categories"]
             ]
 
+            # category overlap injection
+            overlap_probability = 0.35
+
+            if random.random() < overlap_probability:
+                preferred_merchants = MERCHANTS
+
             merchant = random.choice(
                 preferred_merchants if preferred_merchants else MERCHANTS
             )
